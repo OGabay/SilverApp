@@ -1,20 +1,39 @@
 const {Telegraf} = require('telegraf');
 
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
-var welcomeMessage;
+const fs = require('fs');
+const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
+const raamLib = require("./moduleTest");
+const { isBoxedPrimitive } = require('util/types');
+
+//keyboard buttons
+var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי", rekemAndAmsap = 'רקם ואמס"פ';
+//habala buttons
+var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = ["הפעלות", "חזרה להפעלות"], specialCharges = ["מטענים ייעודים", "חזרה למטענים ייעודים"], mainChargesTable = "טבלת מטענים עיקרים";
+//ptilim buttons
+var ptilRoem = "פתיל רועם", ptilRoemBody = " " ,ptilHashaya = ["פתיל השהייה"], kosit10 = ["כוסית ייזום(טן)"] , excelerentN3 = ["מאיץ מספר 3"];
+//napazim buttons
+var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
+//special charges buttons
+var raam = ["מטען רעם"], exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], amonal = ["אמונל"];
 
 
+//code
 //Bot start command
 bot.command("start", ctx =>
 {
+    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/anafHandasaLogo.jpeg'});
     bot.telegram.sendMessage(ctx.chat.id, welcomeMessage, {
         reply_markup:
         {
             keyboard:
             [
                 [
-                    {text: 'בדחים'},
-                    {text: 'חומר מקצועי'}
+                    {text: homerM},
+                ],
+                [
+                    {text: badah},
+                    {text: 'רשמ"צים'}
                 ]
             ],
             resize_keyboard: true
@@ -23,15 +42,19 @@ bot.command("start", ctx =>
 })
 
 //Main menu cluse
-bot.hears('ראשי', ctx => { 
-    bot.telegram.sendMessage(ctx.chat.id, "מסך ראשי", {
+bot.hears(mainMenu, ctx => { 
+    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/anafHandasaLogo.jpeg'});
+    bot.telegram.sendMessage(ctx.chat.id, welcomeMessage, {
         reply_markup:
         {
             keyboard:
             [
                 [
-                    {text: 'בדחים'},
-                    {text: 'חומר מקצועי'}
+                    {text: homerM},
+                ],
+                [
+                    {text: badah},
+                    {text: 'רשמ"צים'}
                 ]
             ],
             resize_keyboard: true
@@ -39,18 +62,18 @@ bot.hears('ראשי', ctx => {
     })
 })
 
-//Main בדחים menu
-bot.hears(['בדחים', 'חזרה לבדחים'], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, "בדחים", {
+//בדחים ראשי
+bot.hears([badah, 'חזרה ל' + badah], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, badah, {
         reply_markup:
         {
             keyboard:
             [
                 [
-                    {text: 'דחדח'},
+                    {text: 'ממלא מקום'},
                 ],
                 [
-                    {text: 'ראשי'},
+                    {text: mainMenu},
                 ],
             ],
             resize_keyboard: true
@@ -58,29 +81,330 @@ bot.hears(['בדחים', 'חזרה לבדחים'], ctx => {
     })
 })
 
-//Main חומר מקצועי menu
-bot.hears(['חומר מקצועי', 'חזרה לחומר מקצועי'], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, "חומר מקצועי", {
+//חומר מקצועי 
+bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, homerM, {
         reply_markup:
         {
             keyboard:
             [
                 [
-                    {text: 'חבלה'},
+                    {text: habala},
                 ],
                 [
-                    {text: 'מיקוש'},
-                    {text: 'רק"ם ואמס"פ'},
+                    {text: mikush},
+                    {text: rekemAndAmsap},
                 ],
                 [
-                    {text: 'ראשי'},
+                    {text: mainMenu},
                 ],
             ],
             resize_keyboard: true
         }
     })
 })
+
+//חבלה ראשי
+bot.hears([habala, 'חזרה ל' + habala], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, habala, {
+        reply_markup:
+        {
+            keyboard:
+            [
+                [
+                    {text: ptilim},
+                    {text: napatzim[0]},
+                ],
+                [
+                    {text: activations[0]},
+                    {text: specialCharges[0]},
+                ],
+                [
+                    {text: mainChargesTable},
+                ],
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + homerM},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//פתילים ומאיצים
+bot.hears([ptilim, 'חזרה ל' + ptilim], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, ptilim,{
+        reply_markup:
+        {
+            keyboard:
+            [
+                [
+                    {text: ptilRoem},
+                    {text: ptilHashaya[0]},
+                ],
+                [
+                    {text: kosit10[0]},
+                    {text: excelerentN3[0]},
+                ],
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + habala},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//פתיל רועם
+bot.hears(ptilRoem, ctx => {
+    bot.telegram.sendMessage(ctx.chat.id , ptilRoemBody,{
+        keyboard:
+            [
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + ptilim},
+                ],
+            ]
+    })
+})
+
+//פתיל השהייה
+bot.hears(ptilHashaya[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, ptilHashaya[1] , {
+        keyboard:
+            [
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + ptilim},
+                ],
+            ],
+    })
+})
+
+//כוסית טן
+bot.hears(kosit10[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, kosit10[1] , {
+        keyboard:
+            [
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + ptilim},
+                ],
+            ],
+    })
+})
+
+//מאיץ מספר 3
+bot.hears(excelerentN3[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, excelerentN3[1] , {
+        keyboard:
+            [
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + ptilim},
+                ],
+            ],
+    })
+})
+
+//napatzim menu
+bot.hears([napatzim[0] , napatzim[1]], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, napatzim[0],{
+        reply_markup:
+        {
+            keyboard:
+            [
+                [
+                    {text: kraviNapatz[0]},
+                    {text: electricNapatz[0]},
+                ],
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + habala},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//נפץ חשמלי
+bot.hears(electricNapatz[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, electricNapatz[1] , {
+        keyboard:
+            [
+                [
+                    {text: mainMenu},
+                    {text: napatzim[1]},
+                ],
+            ],
+    })
+})
+
+//נפץ חשמלי
+bot.hears(kraviNapatz[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, kraviNapatz[1] , 
+    {
+        inline_keyboard:
+        [
+            [
+                {text: "בטיחות", callback_data: "בטיחות נפץ קרבי"},
+                {text: 'סד"פ הפעלה', callback_data: "סדפ נפץ קרבי"}
+            ]
+        ],
+        keyboard:
+            [
+                [
+                    {text: mainMenu},
+                    {text: napatzim[1]},
+                ],
+            ],
+    })
+})
+
+//תפריט מטענים ייעודים
+bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, specialCharges[0] ,{
+        reply_markup:
+        {
+            keyboard:
+            [
+                [
+                    {text: raam[0]},
+                    {text: exploadingFrame[0]},
+                ],
+                [
+                    {text: amonal[0]},
+                    {text: zapah[0]},
+                ],
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + habala},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//raam
+bot.hears(raam[0], ctx => {
+    /*bot.telegram.sendMessage(ctx.chat.id, raam[0],{
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות רעם'},
+                    {text: 'סד"פ', callback_data: 'סד"פ רעם'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה רעם'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה רעם'},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })*/
+    raamLib.raamAction();
+})
+
+//safety raam
+bot.action('בטיחות רעם', ctx =>{
+    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/raam/raamSafetyRanges.png'});
+    bot.telegram.sendMessage(ctx.chat.id, raam[1],{
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות רעם'},
+                    {text: 'סד"פ', callback_data: 'סד"פ רעם'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה רעם'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה רעם'},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//תפריט הפעלות
+/*bot.hears([activations[0] , activations[1]], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, activations[0],{
+        reply_markup:
+        {
+            keyboard:
+            [
+                [
+                    {text: kraviNapatz[0]},
+                    {text: electricNapatz[0]},
+                ],
+                [
+                    {text: mainMenu},
+                    {text: 'חזרה ל' + habala},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})*/
+
+//טבלת מטענים עיקריים
+bot.hears(mainChargesTable, ctx => {
+    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/mainChargesTable.jpeg'});
+    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/mainChargesTable2.jpeg'});
+})
+
 
 //Messages
-welcomeMessage = "שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך";
+welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך';
+
+//ptil roem txt message read
+fs.readFile('./Texts/Habala/ptilRoem.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    ptilRoemBody = text;
+     });
+
+//ptil hashaya txt message read
+fs.readFile('./Texts/Habala/ptilHashaya.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    ptilHashaya[1] = text;
+    });
+
+//kosit ten txt message read
+fs.readFile('./Texts/Habala/kosit10.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    kosit10[1] = text;
+    });
+
+//excelerent 3 txt message read 
+fs.readFile('./Texts/Habala/excelerent3.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    excelerentN3[1] = text;
+    });
+
+
+//electric napatz txt message read 
+fs.readFile('./Texts/Habala/Enapatz.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    electricNapatz[1] = text;
+    });
+
+//kravi napatz txt message read 
+fs.readFile('./Texts/Habala/Knapatz.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    kraviNapatz[1] = text;
+    });
+
+//raam safety text read 
+fs.readFile('./Texts/Habala/specialCharges/safetyRaam.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    raam[1] = text;
+    });
+
+/*var chatid = ctx.chat.id;
+module.exports(ctx.chat.id);*/
 bot.launch();
