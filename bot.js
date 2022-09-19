@@ -3,8 +3,9 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const raamLib = require("./moduleTest");
+const raamLib = require("./raamFunctions");
 const { isBoxedPrimitive } = require('util/types');
+
 
 //keyboard buttons
 var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי", rekemAndAmsap = 'רקם ואמס"פ';
@@ -16,7 +17,8 @@ var ptilRoem = "פתיל רועם", ptilRoemBody = " " ,ptilHashaya = ["פתיל
 var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
 //special charges buttons
 var raam = ["מטען רעם"], exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], amonal = ["אמונל"];
-
+//zama buttons
+var zamaSafety = ['בטיחות צמ"ה'], unitAnalysis = ["אבחון כוח"];
 
 //code
 //Bot start command
@@ -290,45 +292,88 @@ bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
 })
 
 //raam
-bot.hears(raam[0], ctx => {
-    /*bot.telegram.sendMessage(ctx.chat.id, raam[0],{
-        reply_markup:
-        {
-            inline_keyboard:[
-                [
-                    {text: 'בטיחות', callback_data: 'בטיחות רעם'},
-                    {text: 'סד"פ', callback_data: 'סד"פ רעם'},
-                ],
-                [
-                    {text: 'סרטון הפעלה', callback_data: 'הפעלה רעם'},
-                    {text: 'סרטון הנחה', callback_data: 'הנחה רעם'},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })*/
-    raamLib.raamAction();
-})
+bot.hears(raam[0], ctx => {raamLib.raamAction();})
+bot.action('בטיחות רעם', ctx =>{raamLib.raamSafety();}) //safety function
 
-//safety raam
-bot.action('בטיחות רעם', ctx =>{
-    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/raam/raamSafetyRanges.png'});
-    bot.telegram.sendMessage(ctx.chat.id, raam[1],{
+//exploding frame
+bot.hears(exploadingFrame[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, exploadingFrame[0],{
         reply_markup:
         {
             inline_keyboard:[
                 [
-                    {text: 'בטיחות', callback_data: 'בטיחות רעם'},
-                    {text: 'סד"פ', callback_data: 'סד"פ רעם'},
+                    {text: 'בטיחות', callback_data: 'בטיחות מסגרת'},
+                    {text: 'סד"פ', callback_data: 'סד"פ מסגרת'},
                 ],
                 [
-                    {text: 'סרטון הפעלה', callback_data: 'הפעלה רעם'},
-                    {text: 'סרטון הנחה', callback_data: 'הנחה רעם'},
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה מסגרת'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה מסגרת'},
                 ],
             ],
             resize_keyboard: true
         }
     })
+})
+
+//safety exploadingFrame
+bot.action('בטיחות מסגרת', ctx =>{
+    bot.telegram.sendMessage(ctx.chat.id, exploadingFrame[1],{
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות מסגרת'},
+                    {text: 'סד"פ', callback_data: 'סד"פ מסגרת'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה מסגרת'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה מסגרת'},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//zapah
+bot.hears(zapah[0], ctx => {
+    bot.telegram.sendMessage(ctx.chat.id, zapah[0],{
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות צפח'},
+                    {text: 'סד"פ', callback_data: 'סד"פ צפח'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפח'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה צפח'},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+})
+
+//safety zapah
+bot.action('בטיחות צפח', ctx =>{
+    bot.telegram.sendMessage(ctx.chat.id, zapah[1],{
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות צפח'},
+                    {text: 'סד"פ', callback_data: 'סד"פ צפח'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפח'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה צפח'},
+                ],
+            ],
+            resize_keyboard: true
+        }
+    })
+    console.log(ctx.chat.id);
 })
 
 //תפריט הפעלות
@@ -356,6 +401,7 @@ bot.action('בטיחות רעם', ctx =>{
 bot.hears(mainChargesTable, ctx => {
     bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/mainChargesTable.jpeg'});
     bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/mainChargesTable2.jpeg'});
+    ctx.sendMessage('לבנת חבלה 10 עד חצי ק"ג טווח בטיחות 75מ' + "'");
 })
 
 
@@ -405,6 +451,17 @@ fs.readFile('./Texts/Habala/specialCharges/safetyRaam.txt', 'utf8', (err, text) 
     raam[1] = text;
     });
 
-/*var chatid = ctx.chat.id;
-module.exports(ctx.chat.id);*/
+//exploading frame safety text read 
+fs.readFile('./Texts/Habala/specialCharges/safetyEFrame.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    exploadingFrame[1] = text;
+    });
+
+//exploading frame safety text read 
+fs.readFile('./Texts/Habala/specialCharges/safetyZapah.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    zapah[1] = text;
+    });
+
+
 bot.launch();

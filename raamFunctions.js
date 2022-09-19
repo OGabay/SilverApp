@@ -3,7 +3,8 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const boti = require("./bot");
+var ctx = require('ctx');
+const chatId = 1746153600;
 
 
 //special charges buttons
@@ -12,7 +13,7 @@ var raam = ["מטען רעם"], exploadingFrame = ["מסגרת פריצה"], zap
 
 function raamAction()
 {
-    bot.telegram.sendMessage(boti.chatid, raam[0],{
+    bot.telegram.sendMessage(chatId, raam[0],{
         reply_markup:
         {
             inline_keyboard:[
@@ -32,9 +33,10 @@ function raamAction()
 
 
 //safety raam
-bot.action('בטיחות רעם', ctx =>{
-    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/raam/raamSafetyRanges.png'});
-    bot.telegram.sendMessage(ctx.chat.id, raam[1],{
+function raamSafety()
+{
+    bot.telegram.sendPhoto(chatId, {source: 'Media/Images/raam/raamSafetyRanges.png'});
+    bot.telegram.sendMessage(chatId, raam[1],{
         reply_markup:
         {
             inline_keyboard:[
@@ -50,8 +52,7 @@ bot.action('בטיחות רעם', ctx =>{
             resize_keyboard: true
         }
     })
-})
-
+}
 
 //raam safety text read 
 fs.readFile('./Texts/Habala/specialCharges/safetyRaam.txt', 'utf8', (err, text) => {
@@ -60,4 +61,4 @@ fs.readFile('./Texts/Habala/specialCharges/safetyRaam.txt', 'utf8', (err, text) 
     });
 
 
-module.exports = {raamAction};
+module.exports = {raamAction, raamSafety};
