@@ -3,12 +3,11 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-var ctx = require('ctx');
 const chatId = 1746153600;
 
 
 //special charges buttons
-var raam = ["מטען רעם"], exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], amonal = ["אמונל"];
+var raam = ["מטען רעם"];
 
 
 function raamAction()
@@ -49,8 +48,9 @@ function raamSafety()
                     {text: 'סרטון הנחה', callback_data: 'הנחה רעם'},
                 ],
             ],
-            resize_keyboard: true
-        }
+            resize_keyboard: true,         
+        },
+        parse_mode: `HTML`
     })
 }
 

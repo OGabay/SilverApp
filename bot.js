@@ -3,22 +3,24 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const raamLib = require("./raamFunctions");
+const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
+const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap");
 const { isBoxedPrimitive } = require('util/types');
+const ctx = require('ctx');
+var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
 
 
 //keyboard buttons
-var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי", rekemAndAmsap = 'רקם ואמס"פ';
+var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי", rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'];
 //habala buttons
 var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = ["הפעלות", "חזרה להפעלות"], specialCharges = ["מטענים ייעודים", "חזרה למטענים ייעודים"], mainChargesTable = "טבלת מטענים עיקרים";
 //ptilim buttons
 var ptilRoem = "פתיל רועם", ptilRoemBody = " " ,ptilHashaya = ["פתיל השהייה"], kosit10 = ["כוסית ייזום(טן)"] , excelerentN3 = ["מאיץ מספר 3"];
-//napazim buttons
-var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
 //special charges buttons
-var raam = ["מטען רעם"], exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], amonal = ["אמונל"];
-//zama buttons
-var zamaSafety = ['בטיחות צמ"ה'], unitAnalysis = ["אבחון כוח"];
+var exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], raam = ["מטען רעם"];
+//rekem&amsap buttons
+var rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה לאמס"פ'];
+
 
 //code
 //Bot start command
@@ -36,6 +38,14 @@ bot.command("start", ctx =>
                 [
                     {text: badah},
                     {text: 'רשמ"צים'}
+                ],
+                [
+                    {text: 'פק"אות'},
+                    {text: 'סיכומי אימונים'},
+                    {text: 'מבחנים'}
+                ],
+                [
+                    {text: 'צמ"ה'}
                 ]
             ],
             resize_keyboard: true
@@ -57,6 +67,14 @@ bot.hears(mainMenu, ctx => {
                 [
                     {text: badah},
                     {text: 'רשמ"צים'}
+                ],
+                [
+                    {text: 'פק"אות'},
+                    {text: 'סיכומי אימונים'},
+                    {text: 'מבחנים'}
+                ],
+                [
+                    {text: 'צמ"ה'}
                 ]
             ],
             resize_keyboard: true
@@ -95,7 +113,7 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
                 ],
                 [
                     {text: mikush},
-                    {text: rekemAndAmsap},
+                    {text: rekemAndAmsap[0]},
                 ],
                 [
                     {text: mainMenu},
@@ -105,6 +123,12 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
         }
     })
 })
+
+//Rekem&amsap tree
+bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAmsapLib.rekemAmsapHead();}) // Head of tree
+bot.hears([rekem[0], rekem[1]], ctx => {rekemAmsapLib.rekemHead();}) // rekem branch start 
+bot.hears([amsap[0], amsap[1]], ctx => {rekemAmsapLib.amsapHead();}) // amsap branch start
+bot.hears('צפ"ש', ctx => {rekemAmsapLib.zapashMenu();}) //live zapash head
 
 //חבלה ראשי
 bot.hears([habala, 'חזרה ל' + habala], ctx => {
@@ -212,59 +236,9 @@ bot.hears(excelerentN3[0], ctx => {
 })
 
 //napatzim menu
-bot.hears([napatzim[0] , napatzim[1]], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, napatzim[0],{
-        reply_markup:
-        {
-            keyboard:
-            [
-                [
-                    {text: kraviNapatz[0]},
-                    {text: electricNapatz[0]},
-                ],
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + habala},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-})
-
-//נפץ חשמלי
-bot.hears(electricNapatz[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, electricNapatz[1] , {
-        keyboard:
-            [
-                [
-                    {text: mainMenu},
-                    {text: napatzim[1]},
-                ],
-            ],
-    })
-})
-
-//נפץ חשמלי
-bot.hears(kraviNapatz[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, kraviNapatz[1] , 
-    {
-        inline_keyboard:
-        [
-            [
-                {text: "בטיחות", callback_data: "בטיחות נפץ קרבי"},
-                {text: 'סד"פ הפעלה', callback_data: "סדפ נפץ קרבי"}
-            ]
-        ],
-        keyboard:
-            [
-                [
-                    {text: mainMenu},
-                    {text: napatzim[1]},
-                ],
-            ],
-    })
-})
+bot.hears([napatzim[0] , napatzim[1]], ctx => {napatzimLib.napatzimMenu();})
+bot.hears(electricNapatz[0], ctx => {napatzimLib.electricNapatzAction();}) //נפץ חשמלי
+bot.hears(kraviNapatz[0], ctx => {napatzimLib.kraviNapatzAction();}) //נפץ קרבי
 
 //תפריט מטענים ייעודים
 bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
@@ -278,7 +252,6 @@ bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
                     {text: exploadingFrame[0]},
                 ],
                 [
-                    {text: amonal[0]},
                     {text: zapah[0]},
                 ],
                 [
@@ -296,88 +269,15 @@ bot.hears(raam[0], ctx => {raamLib.raamAction();})
 bot.action('בטיחות רעם', ctx =>{raamLib.raamSafety();}) //safety function
 
 //exploding frame
-bot.hears(exploadingFrame[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, exploadingFrame[0],{
-        reply_markup:
-        {
-            inline_keyboard:[
-                [
-                    {text: 'בטיחות', callback_data: 'בטיחות מסגרת'},
-                    {text: 'סד"פ', callback_data: 'סד"פ מסגרת'},
-                ],
-                [
-                    {text: 'סרטון הפעלה', callback_data: 'הפעלה מסגרת'},
-                    {text: 'סרטון הנחה', callback_data: 'הנחה מסגרת'},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-})
-
-//safety exploadingFrame
-bot.action('בטיחות מסגרת', ctx =>{
-    bot.telegram.sendMessage(ctx.chat.id, exploadingFrame[1],{
-        reply_markup:
-        {
-            inline_keyboard:[
-                [
-                    {text: 'בטיחות', callback_data: 'בטיחות מסגרת'},
-                    {text: 'סד"פ', callback_data: 'סד"פ מסגרת'},
-                ],
-                [
-                    {text: 'סרטון הפעלה', callback_data: 'הפעלה מסגרת'},
-                    {text: 'סרטון הנחה', callback_data: 'הנחה מסגרת'},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-})
+bot.hears(exploadingFrame[0], ctx => {eFrameLib.eFrameAction();})
+bot.action('בטיחות מסגרת', ctx =>{eFrameLib.eFrameSafety();}) //safety function
 
 //zapah
-bot.hears(zapah[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, zapah[0],{
-        reply_markup:
-        {
-            inline_keyboard:[
-                [
-                    {text: 'בטיחות', callback_data: 'בטיחות צפח'},
-                    {text: 'סד"פ', callback_data: 'סד"פ צפח'},
-                ],
-                [
-                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפח'},
-                    {text: 'סרטון הנחה', callback_data: 'הנחה צפח'},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-})
-
-//safety zapah
-bot.action('בטיחות צפח', ctx =>{
-    bot.telegram.sendMessage(ctx.chat.id, zapah[1],{
-        reply_markup:
-        {
-            inline_keyboard:[
-                [
-                    {text: 'בטיחות', callback_data: 'בטיחות צפח'},
-                    {text: 'סד"פ', callback_data: 'סד"פ צפח'},
-                ],
-                [
-                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפח'},
-                    {text: 'סרטון הנחה', callback_data: 'הנחה צפח'},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-    console.log(ctx.chat.id);
-})
+bot.hears(zapah[0], ctx => {zapahLib.zapahAction()})
+bot.action('בטיחות צפח', ctx =>{zapahLib.zapahSafety()}) //safety function
 
 //תפריט הפעלות
-/*bot.hears([activations[0] , activations[1]], ctx => {
+bot.hears([activations[0] , activations[1]], ctx => {
     bot.telegram.sendMessage(ctx.chat.id, activations[0],{
         reply_markup:
         {
@@ -395,7 +295,7 @@ bot.action('בטיחות צפח', ctx =>{
             resize_keyboard: true
         }
     })
-})*/
+})
 
 //טבלת מטענים עיקריים
 bot.hears(mainChargesTable, ctx => {
@@ -431,37 +331,5 @@ fs.readFile('./Texts/Habala/excelerent3.txt', 'utf8', (err, text) => {
     if (err) {console.error(err); return;}
     excelerentN3[1] = text;
     });
-
-
-//electric napatz txt message read 
-fs.readFile('./Texts/Habala/Enapatz.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    electricNapatz[1] = text;
-    });
-
-//kravi napatz txt message read 
-fs.readFile('./Texts/Habala/Knapatz.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    kraviNapatz[1] = text;
-    });
-
-//raam safety text read 
-fs.readFile('./Texts/Habala/specialCharges/safetyRaam.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    raam[1] = text;
-    });
-
-//exploading frame safety text read 
-fs.readFile('./Texts/Habala/specialCharges/safetyEFrame.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    exploadingFrame[1] = text;
-    });
-
-//exploading frame safety text read 
-fs.readFile('./Texts/Habala/specialCharges/safetyZapah.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    zapah[1] = text;
-    });
-
 
 bot.launch();
