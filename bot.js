@@ -4,18 +4,23 @@ const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
 const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
-const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap");
+const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
+const testsAndSafetyLib = require("./testAndSafety");
 const { isBoxedPrimitive } = require('util/types');
 const ctx = require('ctx');
+
+
 var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
-
-
 //keyboard buttons
-var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי", rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'];
+var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי";
+var testsAndSafety = ["מבחנים ובטיחות"], pakaKesef = 'פק"א אימון כס"ף';
+var rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], diagnosis = ["אבחונים", "אבחון גדוד", "אבחון פלוגה"];
 //habala buttons
-var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = ["הפעלות", "חזרה להפעלות"], specialCharges = ["מטענים ייעודים", "חזרה למטענים ייעודים"], mainChargesTable = "טבלת מטענים עיקרים";
+var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = ["הפעלות", "חזרה להפעלות"];
+var specialCharges = ["מטענים ייעודים", "חזרה למטענים ייעודים"], mainChargesTable = "טבלת מטענים עיקרים";
 //ptilim buttons
-var ptilRoem = "פתיל רועם", ptilRoemBody = " " ,ptilHashaya = ["פתיל השהייה"], kosit10 = ["כוסית ייזום(טן)"] , excelerentN3 = ["מאיץ מספר 3"];
+var ptilRoem = "פתיל רועם", ptilRoemBody = " " ,ptilHashaya = ["פתיל השהייה"], kosit10 = ["כוסית ייזום(טן)"];
+var excelerentN3 = ["מאיץ מספר 3"];
 //special charges buttons
 var exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], raam = ["מטען רעם"];
 //rekem&amsap buttons
@@ -37,12 +42,13 @@ bot.command("start", ctx =>
                 ],
                 [
                     {text: badah},
-                    {text: 'רשמ"צים'}
+                    {text: 'רשמ"צים'},
+                    {text: diagnosis[0]}
                 ],
                 [
-                    {text: 'פק"אות'},
+                    {text: pakaKesef},
                     {text: 'סיכומי אימונים'},
-                    {text: 'מבחנים'}
+                    {text: testsAndSafety[0]}
                 ],
                 [
                     {text: 'צמ"ה'}
@@ -66,12 +72,13 @@ bot.hears(mainMenu, ctx => {
                 ],
                 [
                     {text: badah},
-                    {text: 'רשמ"צים'}
+                    {text: 'רשמ"צים'},
+                    {text: diagnosis[0]}
                 ],
                 [
-                    {text: 'פק"אות'},
+                    {text: pakaKesef},
                     {text: 'סיכומי אימונים'},
-                    {text: 'מבחנים'}
+                    {text: testsAndSafety[0]}
                 ],
                 [
                     {text: 'צמ"ה'}
@@ -101,6 +108,25 @@ bot.hears([badah, 'חזרה ל' + badah], ctx => {
     })
 })
 
+//diganosis menu
+bot.hears(diagnosis[0], ctx =>{diagnosisLib.diagnosisMenu();}) //menu
+bot.hears(diagnosis[1], ctx =>{diagnosisLib.batilionDiag();}) //batilion diagnosis file send
+bot.hears(diagnosis[2], ctx =>{diagnosisLib.squadDiag();}) //squad diagnosis file send
+
+//testsNSafety menu
+bot.hears(testsAndSafety[0], ctx => {testsAndSafetyLib.testsAndSafetyMenu()}) // menu
+bot.hears("גדוד 7086", ctx => {testsAndSafetyLib.gdud7086();})
+bot.hears("גדוד 924", ctx => {testsAndSafetyLib.gdud924();})
+bot.hears("גדוד 8173", ctx => {testsAndSafetyLib.gdud8173();})
+bot.hears("גדוד 710", ctx => {testsAndSafetyLib.gdud710();})
+bot.hears("גדוד 7071", ctx => {testsAndSafetyLib.gdud7071();})
+bot.hears("גדוד 5280", ctx => {testsAndSafetyLib.gdud5280();})
+bot.hears("גדוד 271", ctx => {testsAndSafetyLib.gdud271();})
+bot.hears("גדוד 8219", ctx => {testsAndSafetyLib.gdud8219();})
+bot.hears("גדוד 9227", ctx => {testsAndSafetyLib.gdud749();})
+bot.hears("גדוד 9227", ctx => {testsAndSafetyLib.gdud9227();})
+bot.hears("גדוד 8170", ctx => {testsAndSafetyLib.gdud8170();})
+
 //חומר מקצועי 
 bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
     bot.telegram.sendMessage(ctx.chat.id, homerM, {
@@ -129,6 +155,8 @@ bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAmsapLib.rekemAmsapH
 bot.hears([rekem[0], rekem[1]], ctx => {rekemAmsapLib.rekemHead();}) // rekem branch start 
 bot.hears([amsap[0], amsap[1]], ctx => {rekemAmsapLib.amsapHead();}) // amsap branch start
 bot.hears('צפ"ש', ctx => {rekemAmsapLib.zapashMenu();}) //live zapash head
+bot.action('בטיחות צפש', ctx => {rekemAmsapLib.zapashSafety();}) //zapash safety 
+bot.action('הפעלה צפש', ctx => {rekemAmsapLib.zapashVid();}) // zapash activation vid 
 
 //חבלה ראשי
 bot.hears([habala, 'חזרה ל' + habala], ctx => {
@@ -304,6 +332,11 @@ bot.hears(mainChargesTable, ctx => {
     ctx.sendMessage('לבנת חבלה 10 עד חצי ק"ג טווח בטיחות 75מ' + "'");
 })
 
+//פק"א אימון כסף
+bot.hears(pakaKesef, ctx =>
+{
+    bot.telegram.sendDocument(ctx.chat.id, {source: 'C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Docs/PakaKesef.pdf'});
+})
 
 //Messages
 welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך';

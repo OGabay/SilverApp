@@ -7,9 +7,9 @@ const chatId = 1746153600;
 
 //napazim buttons
 var mainMenu = "ראשי", homerM = ["חומר מקצועי" , "חזרה לחומר מקצועי"], rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה לאמס"פ'];
-var zapash = ['צפ"ש' , 'חזרה לצפ"ש'], inertZapash = ['צפ"ש אינרטי' , 'חזרה לצפ"ש אינרטי']; 
-var rizuf = ['ריצוף', 'חזרה לריצוף'], inertRizuf = ['ריצוף אינרטי', 'חזרה לריצוף אינרטי'];
-var snatcher = ["חטפן", "חזרה לחטפן"], inertSnatcher = ["חטפן אינרטי", "חזרה לחטפן אינרטי"];
+var zapash = ['צפ"ש' , 'חזרה לצפ"ש']; 
+var rizuf = ['ריצוף', 'חזרה לריצוף'];
+var snatcher = ["חטפן", "חזרה לחטפן"];
 
 //The head branch of rekem&amsap tree
 function rekemAmsapHead() 
@@ -98,8 +98,56 @@ function zapashMenu()
     })
 }
 
-function rizufmenu()
+function zapashSafety()
 {
-    
+    bot.telegram.sendMessage(chatId, zapash[2], {
+        reply_markup:
+        {
+            inline_keyboard:
+            [
+                [
+                    {text: 'סד"פ הרכבה' , callback_data: 'חיבור צפש'},
+                    {text: 'בטיחות', callback_data: 'בטיחות צפש'},
+                    
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפש'},
+                ]
+
+            ],
+           
+        },
+        parse_mode: 'HTML'
+    })
 }
-module.exports = {rekemAmsapHead, rekemHead, amsapHead, zapashMenu};
+
+function zapashVid()
+{
+    bot.telegram.sendVideo(chatId, {source: 'C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Vids/testVid.mp4'}, {
+        reply_markup:
+        {
+            inline_keyboard:
+            [
+                [
+                    {text: 'סד"פ הרכבה' , callback_data: 'חיבור צפש'},
+                    {text: 'בטיחות', callback_data: 'בטיחות צפש'},
+                    
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפש'},
+                ]
+
+            ],
+           
+        },
+    })
+}
+
+
+fs.readFile('./Texts/Rekem&Amsap/safetyZapash.txt', 'utf8', (err, text) => {
+    if (err) {console.error(err); return;}
+    zapash[2] = text;
+    });
+
+
+module.exports = {rekemAmsapHead, rekemHead, amsapHead, zapashMenu, zapashSafety,zapashVid};
