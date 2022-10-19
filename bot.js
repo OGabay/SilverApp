@@ -10,6 +10,7 @@ const { isBoxedPrimitive } = require('util/types');
 const ctx = require('ctx');
 
 
+
 var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
 //keyboard buttons
 var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי";
@@ -109,23 +110,24 @@ bot.hears([badah, 'חזרה ל' + badah], ctx => {
 })
 
 //diganosis menu
-bot.hears(diagnosis[0], ctx =>{diagnosisLib.diagnosisMenu();}) //menu
-bot.hears(diagnosis[1], ctx =>{diagnosisLib.batilionDiag();}) //batilion diagnosis file send
-bot.hears(diagnosis[2], ctx =>{diagnosisLib.squadDiag();}) //squad diagnosis file send
+bot.hears(diagnosis[0], ctx =>{diagnosisLib.diagnosisMenu(ctx.chat.id);}) //menu
+bot.hears(diagnosis[1], ctx =>{diagnosisLib.batilionDiag(ctx.chat.id);}) //batilion diagnosis file send
+bot.hears(diagnosis[2], ctx =>{diagnosisLib.squadDiag(ctx.chat.id);}) //squad diagnosis file send
 
 //testsNSafety menu
-bot.hears(testsAndSafety[0], ctx => {testsAndSafetyLib.testsAndSafetyMenu()}) // menu
-bot.hears("גדוד 7086", ctx => {testsAndSafetyLib.gdud7086();})
-bot.hears("גדוד 924", ctx => {testsAndSafetyLib.gdud924();})
-bot.hears("גדוד 8173", ctx => {testsAndSafetyLib.gdud8173();})
-bot.hears("גדוד 710", ctx => {testsAndSafetyLib.gdud710();})
-bot.hears("גדוד 7071", ctx => {testsAndSafetyLib.gdud7071();})
-bot.hears("גדוד 5280", ctx => {testsAndSafetyLib.gdud5280();})
-bot.hears("גדוד 271", ctx => {testsAndSafetyLib.gdud271();})
-bot.hears("גדוד 8219", ctx => {testsAndSafetyLib.gdud8219();})
-bot.hears("גדוד 9227", ctx => {testsAndSafetyLib.gdud749();})
-bot.hears("גדוד 9227", ctx => {testsAndSafetyLib.gdud9227();})
-bot.hears("גדוד 8170", ctx => {testsAndSafetyLib.gdud8170();})
+bot.hears(testsAndSafety[0], ctx => {testsAndSafetyLib.testsAndSafetyMenu(ctx.chat.id)}) // menu
+bot.hears("גדוד 7086", ctx => {testsAndSafetyLib.gdud7086(ctx.chat.id);})
+bot.hears("גדוד 924", ctx => {testsAndSafetyLib.gdud924(ctx.chat.id);})
+bot.hears("גדוד 8173", ctx => {testsAndSafetyLib.gdud8173(ctx.chat.id);})
+bot.hears("גדוד 710", ctx => {testsAndSafetyLib.gdud710(ctx.chat.id);})
+bot.hears("גדוד 7071", ctx => {testsAndSafetyLib.gdud7071(ctx.chat.id);})
+bot.hears("גדוד 5280", ctx => {testsAndSafetyLib.gdud5280(ctx.chat.id);})
+bot.hears("גדוד 271", ctx => {testsAndSafetyLib.gdud271(ctx.chat.id);})
+bot.hears("גדוד 8219", ctx => {testsAndSafetyLib.gdud8219(ctx.chat.id);})
+bot.hears("גדוד 749", ctx => {testsAndSafetyLib.gdud749(ctx.chat.id);})
+bot.hears("גדוד 9227", ctx => {testsAndSafetyLib.gdud9227(ctx.chat.id);})
+bot.hears("גדוד 8170", ctx => {testsAndSafetyLib.gdud8170(ctx.chat.id);})
+bot.hears("גדוד 7107", ctx => {testsAndSafetyLib.gdud7107(ctx.chat.id);})
 
 //חומר מקצועי 
 bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
@@ -151,12 +153,12 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
 })
 
 //Rekem&amsap tree
-bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAmsapLib.rekemAmsapHead();}) // Head of tree
-bot.hears([rekem[0], rekem[1]], ctx => {rekemAmsapLib.rekemHead();}) // rekem branch start 
-bot.hears([amsap[0], amsap[1]], ctx => {rekemAmsapLib.amsapHead();}) // amsap branch start
-bot.hears('צפ"ש', ctx => {rekemAmsapLib.zapashMenu();}) //live zapash head
-bot.action('בטיחות צפש', ctx => {rekemAmsapLib.zapashSafety();}) //zapash safety 
-bot.action('הפעלה צפש', ctx => {rekemAmsapLib.zapashVid();}) // zapash activation vid 
+bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAmsapLib.rekemAmsapHead(ctx.chat.id);}) // Head of tree
+bot.hears([rekem[0], rekem[1]], ctx => {rekemAmsapLib.rekemHead(ctx.chat.id);}) // rekem branch start 
+bot.hears([amsap[0], amsap[1]], ctx => {rekemAmsapLib.amsapHead(ctx.chat.id);}) // amsap branch start
+bot.hears('צפ"ש', ctx => {rekemAmsapLib.zapashMenu(ctx.chat.id);}) //live zapash head
+bot.action('בטיחות צפש', ctx => {rekemAmsapLib.zapashSafety(ctx.chat.id);}) //zapash safety 
+bot.action('הפעלה צפש', ctx => {rekemAmsapLib.zapashVid(ctx.chat.id);}) // zapash activation vid 
 
 //חבלה ראשי
 bot.hears([habala, 'חזרה ל' + habala], ctx => {
@@ -264,9 +266,9 @@ bot.hears(excelerentN3[0], ctx => {
 })
 
 //napatzim menu
-bot.hears([napatzim[0] , napatzim[1]], ctx => {napatzimLib.napatzimMenu();})
-bot.hears(electricNapatz[0], ctx => {napatzimLib.electricNapatzAction();}) //נפץ חשמלי
-bot.hears(kraviNapatz[0], ctx => {napatzimLib.kraviNapatzAction();}) //נפץ קרבי
+bot.hears([napatzim[0] , napatzim[1]], ctx => {napatzimLib.napatzimMenu(ctx.chat.id);})
+bot.hears(electricNapatz[0], ctx => {napatzimLib.electricNapatzAction(ctx.chat.id);}) //נפץ חשמלי
+bot.hears(kraviNapatz[0], ctx => {napatzimLib.kraviNapatzAction(ctx.chat.id);}) //נפץ קרבי
 
 //תפריט מטענים ייעודים
 bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
@@ -293,16 +295,19 @@ bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
 })
 
 //raam
-bot.hears(raam[0], ctx => {raamLib.raamAction();})
-bot.action('בטיחות רעם', ctx =>{raamLib.raamSafety();}) //safety function
+bot.hears(raam[0], ctx => {raamLib.raamAction(ctx.chat.id);})
+bot.action('בטיחות רעם', ctx =>{raamLib.raamSafety(ctx.chat.id);}) //safety function
 
 //exploding frame
-bot.hears(exploadingFrame[0], ctx => {eFrameLib.eFrameAction();})
-bot.action('בטיחות מסגרת', ctx =>{eFrameLib.eFrameSafety();}) //safety function
+bot.hears(exploadingFrame[0], ctx => {eFrameLib.eFrameAction(ctx.chat.id);})
+bot.action('בטיחות מסגרת', ctx =>{eFrameLib.eFrameSafety(ctx.chat.id);}) //safety function
+bot.action('סד"פ מסגרת', ctx =>{eFrameLib.eFrameInst(ctx.chat.id);}) // 
 
 //zapah
-bot.hears(zapah[0], ctx => {zapahLib.zapahAction()})
-bot.action('בטיחות צפח', ctx =>{zapahLib.zapahSafety()}) //safety function
+bot.hears(zapah[0], ctx => {zapahLib.zapahAction(ctx.chat.id)})
+bot.action('בטיחות צפח', ctx =>{zapahLib.zapahSafety(ctx.chat.id)}) //safety function
+bot.action('סד"פ צפח', ctx => {zapahLib.zapahIns(ctx.chat.id)})
+bot.action('הפעלה צפח', ctx => {zapahLib.zapahExploasion(ctx.chat.id)})
 
 //תפריט הפעלות
 bot.hears([activations[0] , activations[1]], ctx => {

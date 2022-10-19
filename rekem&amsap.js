@@ -3,7 +3,7 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const chatId = 1746153600;
+
 
 //napazim buttons
 var mainMenu = "ראשי", homerM = ["חומר מקצועי" , "חזרה לחומר מקצועי"], rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה לאמס"פ'];
@@ -12,7 +12,7 @@ var rizuf = ['ריצוף', 'חזרה לריצוף'];
 var snatcher = ["חטפן", "חזרה לחטפן"];
 
 //The head branch of rekem&amsap tree
-function rekemAmsapHead() 
+function rekemAmsapHead(chatId) 
 {
     bot.telegram.sendMessage(chatId, rekemAndAmsap[0], {
         reply_markup:
@@ -33,7 +33,7 @@ function rekemAmsapHead()
     })
 }
 
-function rekemHead()
+function rekemHead(chatId)
 {
     bot.telegram.sendMessage(chatId,rekem[0], {
         reply_markup:
@@ -53,7 +53,7 @@ function rekemHead()
     })
 }
 
-function amsapHead()
+function amsapHead(chatId)
 {
     bot.telegram.sendMessage(chatId,amsap[0], {
         reply_markup:
@@ -77,7 +77,7 @@ function amsapHead()
     })
 }
 
-function zapashMenu()
+function zapashMenu(chatId)
 {
     bot.telegram.sendMessage(chatId, zapash[0], {
         reply_markup:
@@ -98,7 +98,7 @@ function zapashMenu()
     })
 }
 
-function zapashSafety()
+function zapashSafety(chatId)
 {
     bot.telegram.sendMessage(chatId, zapash[2], {
         reply_markup:
@@ -121,7 +121,7 @@ function zapashSafety()
     })
 }
 
-function zapashVid()
+function zapashVid(chatId)
 {
     bot.telegram.sendVideo(chatId, {source: 'C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Vids/testVid.mp4'}, {
         reply_markup:

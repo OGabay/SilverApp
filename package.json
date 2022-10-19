@@ -1,18 +1,21 @@
 {
-  "dependencies": {
-    "ctx": "^0.3.0",
-    "messaging-api-telegram": "^1.1.0",
-    "readdir-sorted": "^3.0.0",
-    "telegraf": "^4.9.1"
-  },
-  "name": "silverapp",
+  "name": "SilverApp",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "This example is so cool.",
+  "main": "web.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "keywords": [
+    "example",
+    "heroku"
+  ],
+  "author": "Omri Gabay",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.9.8"
+  },
+  "engines": {
+    "node": "14.x"
+  }
 }

@@ -3,12 +3,12 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const chatId = 1746153600;
+
 
 var diagnosis = ["אבחונים"], mainMenu = "ראשי";
 
 //menu
-function diagnosisMenu()
+function diagnosisMenu(chatId)
 {
     bot.telegram.sendMessage(chatId, diagnosis[0],{
         reply_markup:
@@ -28,12 +28,12 @@ function diagnosisMenu()
     })
 }
 
-function squadDiag()
+function squadDiag(chatId)
 {
     bot.telegram.sendDocument(chatId, {source: "C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Docs/SquadDiagnosis.pdf"});
 }
 
-function batilionDiag()
+function batilionDiag(chatId)
 {
     bot.telegram.sendDocument(chatId, {source: "C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Docs/BatilionDiagnosis.pdf"})
 }

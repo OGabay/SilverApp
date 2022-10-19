@@ -3,14 +3,14 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const chatId = 1746153600;
+
 
 
 //special charges buttons
 var raam = ["מטען רעם"];
 
 
-function raamAction()
+function raamAction(chatId)
 {
     bot.telegram.sendMessage(chatId, raam[0],{
         reply_markup:
@@ -32,7 +32,7 @@ function raamAction()
 
 
 //safety raam
-function raamSafety()
+function raamSafety(chatId)
 {
     bot.telegram.sendPhoto(chatId, {source: 'Media/Images/raam/raamSafetyRanges.png'});
     bot.telegram.sendMessage(chatId, raam[1],{

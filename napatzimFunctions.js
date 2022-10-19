@@ -3,13 +3,13 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
-const chatId = 1746153600;
+
 
 //napazim buttons
 var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"], mainMenu = "ראשי", napatzim = ["נפצים", "חזרה לנפצים"], habala = "חבלה";
 
 //napazim menu
-function napatzimMenu()
+function napatzimMenu(chatId)
 {
     bot.telegram.sendMessage(chatId, napatzim[0],{
         reply_markup:
@@ -31,7 +31,7 @@ function napatzimMenu()
 }
 
 // electric napatz function
-function electricNapatzAction()
+function electricNapatzAction(chatId)
 {
     bot.telegram.sendMessage(chatId, electricNapatz[1] , {
         keyboard:
@@ -46,7 +46,7 @@ function electricNapatzAction()
 
 
 //kravi napatz function
-function kraviNapatzAction()
+function kraviNapatzAction(chatId)
 {
     bot.telegram.sendMessage(chatId, kraviNapatz[1] , 
         {
