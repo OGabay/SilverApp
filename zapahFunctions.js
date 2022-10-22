@@ -75,7 +75,7 @@ function zapahIns(chatId)
 
 function zapahExploasion(chatId)
 {
-    bot.telegram.sendVideo(chatId, {source: 'C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Vids/zapahExplosion.mp4'}, {
+    bot.telegram.sendVideo(chatId, {source: './Media/Vids/zapahExplosion.mp4'}, {
         reply_markup:
         {
             inline_keyboard:[
