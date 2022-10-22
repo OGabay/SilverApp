@@ -30,8 +30,7 @@ var rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה
 //Bot start command
 bot.command("start", ctx =>
 {
-    bot.telegram.sendMessage(ctx.chat.id, "fff");
-    /*bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/anafHandasaLogo.jpeg'});
+    bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/anafHandasaLogo.jpeg'});
     bot.telegram.sendMessage(ctx.chat.id, welcomeMessage, {
         reply_markup:
         {
@@ -56,10 +55,10 @@ bot.command("start", ctx =>
             ],
             resize_keyboard: true
         }
-    })*/
+    })
 })
 
-/*//Main menu cluse
+//Main menu cluse
 bot.hears(mainMenu, ctx => { 
     bot.telegram.sendPhoto(ctx.chat.id, {source: 'Media/Images/anafHandasaLogo.jpeg'});
     bot.telegram.sendMessage(ctx.chat.id, welcomeMessage, {
@@ -368,5 +367,5 @@ fs.readFile('./Texts/Habala/excelerent3.txt', 'utf8', (err, text) => {
     if (err) {console.error(err); return;}
     excelerentN3[1] = text;
     });
-*/
+
 bot.launch();
