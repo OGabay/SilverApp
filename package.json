@@ -16,7 +16,7 @@
    "ctx": "0.3.0",
    "telegraf": "4.10.0",
    "messaging-api-telegram": "1.1.0",
-   "util": "0.12.5"
+   "fs": "0.0.1-security"
   },
   "engines": {
     "node": "14.x"
