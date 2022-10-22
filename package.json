@@ -13,7 +13,6 @@
   "author": "Omri Gabay",
   "license": "MIT",
   "dependencies": {
-   "fs": "0.0.1",
    "ctx": "0.3.0",
    "telegraf": "4.10.0"
   },
