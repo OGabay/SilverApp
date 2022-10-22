@@ -1,7 +1,7 @@
 const {Telegraf} = require('telegraf');
 
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
-const fs = require('fs');
+//const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
 const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
 const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
