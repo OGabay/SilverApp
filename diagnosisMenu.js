@@ -30,12 +30,12 @@ function diagnosisMenu(chatId)
 
 function squadDiag(chatId)
 {
-    bot.telegram.sendDocument(chatId, {source: "C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Docs/SquadDiagnosis.pdf"});
+    bot.telegram.sendDocument(chatId, {source: "Media/Docs/SquadDiagnosis.pdf"});
 }
 
 function batilionDiag(chatId)
 {
-    bot.telegram.sendDocument(chatId, {source: "C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Docs/BatilionDiagnosis.pdf"})
+    bot.telegram.sendDocument(chatId, {source: "Media/Docs/BatilionDiagnosis.pdf"})
 }
 
 module.exports = {diagnosisMenu, squadDiag, batilionDiag};

@@ -123,7 +123,7 @@ function zapashSafety(chatId)
 
 function zapashVid(chatId)
 {
-    bot.telegram.sendVideo(chatId, {source: 'C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Vids/testVid.mp4'}, {
+    bot.telegram.sendVideo(chatId, {source: 'Media/Vids/zapashActivation.mp4'}, {
         reply_markup:
         {
             inline_keyboard:

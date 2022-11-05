@@ -338,11 +338,11 @@ bot.hears(mainChargesTable, ctx => {
 //פק"א אימון כסף
 bot.hears(pakaKesef, ctx =>
 {
-    bot.telegram.sendDocument(ctx.chat.id, {source: 'C:/Users/omrih/OneDrive/Desktop/SilverApp/Media/Docs/PakaKesef.pdf'});
+    bot.telegram.sendDocument(ctx.chat.id, {source: 'Media/Docs/PakaKesef.pdf'});
 })
 
 //Messages
-welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך';
+welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך \n פותח ע"י עומרי גבאי - 0544704404';
 
 //ptil roem txt message read
 fs.readFile('./Texts/Habala/ptilRoem.txt', 'utf8', (err, text) => {
