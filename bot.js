@@ -4,26 +4,30 @@ const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
 const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
-const testsAndSafetyLib = require("./testAndSafety");
+const testsAndSafetyLib = require("./testAndSafety"), equipListLib = require("./equipmentListMenu"), activationLib = require("./activationsMenu");
+const ptilimLib = require("./ptilimMenu");
 const ctx = require('ctx');
 
 
-
+//activations and napatzim
 var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
+var kraviActivation = ["הפעלה קרבית", 'סד"פ הפעלה קרבית' , "סרטון הפעלה קרבית"] , electricActivation = ["הפעלה חשמלית", 'סרטון הפעלה חשמלית' , 'סד"פ הפעלה חשמלית'];
 //keyboard buttons
 var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי";
 var testsAndSafety = ["מבחנים ובטיחות"], pakaKesef = 'פק"א אימון כס"ף';
 var rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], diagnosis = ["אבחונים", "אבחון גדוד", "אבחון פלוגה"];
 //habala buttons
-var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = ["הפעלות", "חזרה להפעלות"];
+var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = "הפעלות";
 var specialCharges = ["מטענים ייעודים", "חזרה למטענים ייעודים"], mainChargesTable = "טבלת מטענים עיקרים";
 //ptilim buttons
-var ptilRoem = "פתיל רועם", ptilRoemBody = " " ,ptilHashaya = ["פתיל השהייה"], kosit10 = ["כוסית ייזום(טן)"];
+var ptilRoem = ["פתיל רועם"],ptilHashaya = ["פתיל השהייה"], kosit10 = ["כוסית ייזום(טן)"];
 var excelerentN3 = ["מאיץ מספר 3"];
 //special charges buttons
 var exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], raam = ["מטען רעם"];
 //rekem&amsap buttons
 var rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה לאמס"פ'];
+//equipList buttons
+var equipList = ['רשמ"צים', 'רשמ"צ כללי', 'רשמ"צ חתימת חבלה', 'רשמ"צ מטווח ירי', 'רשמ"צ מטווח חבלה'];
 
 
 //code
@@ -170,7 +174,7 @@ bot.hears([habala, 'חזרה ל' + habala], ctx => {
                     {text: napatzim[0]},
                 ],
                 [
-                    {text: activations[0]},
+                    {text: activations},
                     {text: specialCharges[0]},
                 ],
                 [
@@ -187,81 +191,11 @@ bot.hears([habala, 'חזרה ל' + habala], ctx => {
 })
 
 //פתילים ומאיצים
-bot.hears([ptilim, 'חזרה ל' + ptilim], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, ptilim,{
-        reply_markup:
-        {
-            keyboard:
-            [
-                [
-                    {text: ptilRoem},
-                    {text: ptilHashaya[0]},
-                ],
-                [
-                    {text: kosit10[0]},
-                    {text: excelerentN3[0]},
-                ],
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + habala},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-})
-
-//פתיל רועם
-bot.hears(ptilRoem, ctx => {
-    bot.telegram.sendMessage(ctx.chat.id , ptilRoemBody,{
-        keyboard:
-            [
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + ptilim},
-                ],
-            ]
-    })
-})
-
-//פתיל השהייה
-bot.hears(ptilHashaya[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, ptilHashaya[1] , {
-        keyboard:
-            [
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + ptilim},
-                ],
-            ],
-    })
-})
-
-//כוסית טן
-bot.hears(kosit10[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, kosit10[1] , {
-        keyboard:
-            [
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + ptilim},
-                ],
-            ],
-    })
-})
-
-//מאיץ מספר 3
-bot.hears(excelerentN3[0], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, excelerentN3[1] , {
-        keyboard:
-            [
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + ptilim},
-                ],
-            ],
-    })
-})
+bot.hears(ptilim, ctx => {ptilimLib.ptilimMenu(ctx.chat.id)})
+bot.hears(ptilRoem[0], ctx => {ptilimLib.ptilRoemfunc(ctx.chat.id)})
+bot.hears(ptilHashaya[0], ctx => {ptilimLib.ptilHashayafunc(ctx.chat.id)})
+bot.hears(kosit10[0], ctx => {ptilimLib.kosit10func(ctx.chat.id)})
+bot.hears(excelerentN3[0], ctx => {ptilimLib.excelerent3func(ctx.chat.id)})
 
 //napatzim menu
 bot.hears([napatzim[0] , napatzim[1]], ctx => {napatzimLib.napatzimMenu(ctx.chat.id);})
@@ -308,25 +242,13 @@ bot.action('סד"פ צפח', ctx => {zapahLib.zapahIns(ctx.chat.id)})
 bot.action('הפעלה צפח', ctx => {zapahLib.zapahExploasion(ctx.chat.id)})
 
 //תפריט הפעלות
-bot.hears([activations[0] , activations[1]], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, activations[0],{
-        reply_markup:
-        {
-            keyboard:
-            [
-                [
-                    {text: kraviNapatz[0]},
-                    {text: electricNapatz[0]},
-                ],
-                [
-                    {text: mainMenu},
-                    {text: 'חזרה ל' + habala},
-                ],
-            ],
-            resize_keyboard: true
-        }
-    })
-})
+bot.hears(activations, ctx => {activationLib.activationsMenu(ctx.chat.id)})
+bot.hears(electricActivation[0], ctx => {activationLib.eActivation(ctx.chat.id)})
+bot.hears(kraviActivation[0], ctx => {activationLib.kActivation(ctx.chat.id)})
+bot.action(kraviActivation[1], ctx => {activationLib.kActivationIns(ctx.chat.id)})
+bot.action(kraviActivation[2], ctx => {activationLib.kActivationVid(ctx.chat.id)})
+bot.action(electricActivation[1], ctx => {activationLib.eActivationVid(ctx.chat.id)})
+bot.action(electricActivation[2], ctx => {activationLib.eActivationIns(ctx.chat.id)})
 
 //טבלת מטענים עיקריים
 bot.hears(mainChargesTable, ctx => {
@@ -336,36 +258,16 @@ bot.hears(mainChargesTable, ctx => {
 })
 
 //פק"א אימון כסף
-bot.hears(pakaKesef, ctx =>
-{
-    bot.telegram.sendDocument(ctx.chat.id, {source: 'Media/Docs/PakaKesef.pdf'});
-})
+bot.hears(pakaKesef, ctx => {bot.telegram.sendDocument(ctx.chat.id, {source: 'Media/Docs/PakaKesef.pdf'});})
+
+//רשמ"צים
+bot.hears(equipList[0], ctx => {equipListLib.equipmentListMenu(ctx.chat.id)})
+bot.hears(equipList[1], ctx => {equipListLib.generalList(ctx.chat.id)})
+bot.hears(equipList[2], ctx => {equipListLib.explosivesRequirement(ctx.chat.id)})
+bot.hears(equipList[3], ctx => {equipListLib.gunRangeEquipment(ctx.chat.id)})
+bot.hears(equipList[4], ctx => {equipListLib.explosivesRangeEquipment(ctx.chat.id)})
 
 //Messages
 welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך \n פותח ע"י עומרי גבאי - 0544704404';
-
-//ptil roem txt message read
-fs.readFile('./Texts/Habala/ptilRoem.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    ptilRoemBody = text;
-     });
-
-//ptil hashaya txt message read
-fs.readFile('./Texts/Habala/ptilHashaya.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    ptilHashaya[1] = text;
-    });
-
-//kosit ten txt message read
-fs.readFile('./Texts/Habala/kosit10.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    kosit10[1] = text;
-    });
-
-//excelerent 3 txt message read 
-fs.readFile('./Texts/Habala/excelerent3.txt', 'utf8', (err, text) => {
-    if (err) {console.error(err); return;}
-    excelerentN3[1] = text;
-    });
 
 bot.launch();
