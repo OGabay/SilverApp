@@ -2,18 +2,18 @@ const {Telegraf} = require('telegraf');
 
 const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
+const ctx = require('ctx');
 const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
 const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
 const testsAndSafetyLib = require("./testAndSafety"), equipListLib = require("./equipmentListMenu"), activationLib = require("./activationsMenu");
-const ptilimLib = require("./ptilimMenu");
-const ctx = require('ctx');
+const ptilimLib = require("./ptilimMenu") , mikushLib = require("./mikush");
 
 
 //activations and napatzim
 var electricNapatz = ["נפץ חשמלי"] , kraviNapatz = ["נפץ קרבי"];
 var kraviActivation = ["הפעלה קרבית", 'סד"פ הפעלה קרבית' , "סרטון הפעלה קרבית"] , electricActivation = ["הפעלה חשמלית", 'סרטון הפעלה חשמלית' , 'סד"פ הפעלה חשמלית'];
 //keyboard buttons
-var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = "מיקוש" , mainMenu = "ראשי";
+var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = ["מיקוש", "חזרה למיקוש"] , mainMenu = "ראשי";
 var testsAndSafety = ["מבחנים ובטיחות"], pakaKesef = 'פק"א אימון כס"ף';
 var rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], diagnosis = ["אבחונים", "אבחון גדוד", "אבחון פלוגה"];
 //habala buttons
@@ -28,6 +28,9 @@ var exploadingFrame = ["מסגרת פריצה"], zapah = ['צפ"ח'], raam = ["�
 var rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה לאמס"פ'];
 //equipList buttons
 var equipList = ['רשמ"צים', 'רשמ"צ כללי', 'רשמ"צ חתימת חבלה', 'רשמ"צ מטווח ירי', 'רשמ"צ מטווח חבלה'];
+//mikush buttons
+var aTank = ["נגד טנקים", "חזרה לנגד טנקים"], inUseAT = ['נ"ט בשימוש'];
+var aPersonal = ["נגד אדם" , 'נ"א לא בשימוש', "4 א'", 'מוקש תאורה'];
 
 
 //code
@@ -113,8 +116,8 @@ bot.hears([badah, 'חזרה ל' + badah], ctx => {
 
 //diganosis menu
 bot.hears(diagnosis[0], ctx =>{diagnosisLib.diagnosisMenu(ctx.chat.id);}) //menu
-bot.hears(diagnosis[1], ctx =>{diagnosisLib.batilionDiag(ctx.chat.id);}) //batilion diagnosis file send
-bot.hears(diagnosis[2], ctx =>{diagnosisLib.squadDiag(ctx.chat.id);}) //squad diagnosis file send
+bot.hears(diagnosis[1], ctx =>{diagnosisLib.batilionDiag(ctx.chat.id);}) //batilion diagnosis file 
+bot.hears(diagnosis[2], ctx =>{diagnosisLib.squadDiag(ctx.chat.id);}) //squad diagnosis file 
 
 //testsNSafety menu
 bot.hears(testsAndSafety[0], ctx => {testsAndSafetyLib.testsAndSafetyMenu(ctx.chat.id)}) // menu
@@ -142,7 +145,7 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
                     {text: habala},
                 ],
                 [
-                    {text: mikush},
+                    {text: mikush[0]},
                     {text: rekemAndAmsap[0]},
                 ],
                 [
@@ -153,6 +156,19 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
         }
     })
 })
+
+//mikush tree
+bot.hears([mikush[0], mikush[1]], ctx => {mikushLib.mikushHead(ctx.chat.id)}) //Head of tree
+bot.hears([aTank[0], aTank[1]], ctx => {mikushLib.aTHead(ctx.chat.id)})
+bot.hears(inUseAT[0], ctx => {mikushLib.aTInUse(ctx.chat.id)})
+bot.hears("29 א'", ctx => {mikushLib.alaf29(ctx.chat.id)})
+bot.hears("M-29", ctx => {mikushLib.M29(ctx.chat.id)})
+bot.hears("M-15", ctx => {mikushLib.M29(ctx.chat.id)})
+bot.hears('נ"ט לא בשימוש', ctx => {mikushLib.aTNotInUse(ctx.chat.id)})
+bot.hears([aPersonal[0], 'הגדרה מוקש נ"א'], ctx => {mikushLib.aPHead(ctx.chat.id)})
+bot.hears(aPersonal[1], ctx => {mikushLib.APNotInUse(ctx.chat.id)})
+bot.hears(aPersonal[2], ctx => {mikushLib.Alef4(ctx.chat.id)})
+bot.hears(aPersonal[3], ctx => {mikushLib.lightMine(ctx.chat.id)})
 
 //Rekem&amsap tree
 bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAmsapLib.rekemAmsapHead(ctx.chat.id);}) // Head of tree
@@ -228,18 +244,25 @@ bot.hears([specialCharges[0] , specialCharges[1]], ctx => {
 
 //raam
 bot.hears(raam[0], ctx => {raamLib.raamAction(ctx.chat.id);})
-bot.action('בטיחות רעם', ctx =>{raamLib.raamSafety(ctx.chat.id);}) //safety function
+bot.action('בטיחות רעם', ctx =>{raamLib.raamSafety(ctx.chat.id);}) 
+bot.action('הפעלה רעם', ctx =>{raamLib.raamExplosion(ctx.chat.id);}) 
+bot.action('סד"פ רעם', ctx =>{raamLib.raamInstructions(ctx.chat.id);}) 
+bot.action('הנחה רעם', ctx =>{raamLib.raamPlacement(ctx.chat.id);}) 
 
 //exploding frame
 bot.hears(exploadingFrame[0], ctx => {eFrameLib.eFrameAction(ctx.chat.id);})
-bot.action('בטיחות מסגרת', ctx =>{eFrameLib.eFrameSafety(ctx.chat.id);}) //safety function
-bot.action('סד"פ מסגרת', ctx =>{eFrameLib.eFrameInst(ctx.chat.id);}) // 
+bot.action('בטיחות מסגרת', ctx =>{eFrameLib.eFrameSafety(ctx.chat.id);}) 
+bot.action('סד"פ מסגרת', ctx =>{eFrameLib.eFrameInst(ctx.chat.id);})  
+bot.action('הפעלה מסגרת', ctx =>{eFrameLib.eFrameActivation(ctx.chat.id);}) 
+bot.action('הנחה מסגרת', ctx => {eFrameLib.eFramePlacement(ctx.chat.id);})
 
 //zapah
 bot.hears(zapah[0], ctx => {zapahLib.zapahAction(ctx.chat.id)})
-bot.action('בטיחות צפח', ctx =>{zapahLib.zapahSafety(ctx.chat.id)}) //safety function
+bot.action('בטיחות צפח', ctx =>{zapahLib.zapahSafety(ctx.chat.id)}) 
 bot.action('סד"פ צפח', ctx => {zapahLib.zapahIns(ctx.chat.id)})
 bot.action('הפעלה צפח', ctx => {zapahLib.zapahExploasion(ctx.chat.id)})
+bot.action('הנחה צפח', ctx => {zapahLib.zapahExploasion(ctx.chat.id)})
+
 
 //תפריט הפעלות
 bot.hears(activations, ctx => {activationLib.activationsMenu(ctx.chat.id)})
@@ -268,6 +291,6 @@ bot.hears(equipList[3], ctx => {equipListLib.gunRangeEquipment(ctx.chat.id)})
 bot.hears(equipList[4], ctx => {equipListLib.explosivesRangeEquipment(ctx.chat.id)})
 
 //Messages
-welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך \n פותח ע"י עומרי גבאי - 0544704404';
+welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך \nמדיה יכולה לקחת זמן להיטען - אנא התעזרו בסבלנות\n פותח ע"י עומרי גבאי - 0544704404';
 
 bot.launch();

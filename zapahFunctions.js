@@ -75,7 +75,27 @@ function zapahIns(chatId)
 
 function zapahExploasion(chatId)
 {
-    bot.telegram.sendVideo(chatId, {source: './Media/Vids/zapahExplosion.mp4'}, {
+    bot.telegram.sendMessage(chatId, zapah[3]/*sendVideo(chatId, {source: './Media/Vids/zapahExplosion.mp4'}*/, {
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות צפח'},
+                    {text: 'סד"פ', callback_data: 'סד"פ צפח'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה צפח'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה צפח'},
+                ],
+            ],
+            resize_keyboard: true
+        },
+    })
+}
+
+function zapahPlacement(chatId)
+{
+    bot.telegram.sendMessage(chatId, zapah[3]/*sendVideo(chatId, {source: './Media/Vids/zapahPlacement.mp4'}*/, {
         reply_markup:
         {
             inline_keyboard:[
@@ -109,4 +129,4 @@ fs.readFile('./Texts/Habala/specialCharges/insZapah.txt', 'utf8', (err, text) =>
     zapah[3] = text;
     });
 
-module.exports = {zapahAction, zapahSafety, zapahIns, zapahExploasion};
+module.exports = {zapahAction, zapahSafety, zapahIns, zapahExploasion, zapahPlacement};

@@ -73,6 +73,46 @@ function eFrameInst(chatId)
     })
 }
 
+function eFrameActivation(chatId)
+{
+    bot.telegram.sendVideo(chatId, {source: './Media/Vids/EFrameActivation.mp4'}, {
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות מסגרת'},
+                    {text: 'סד"פ', callback_data: 'סד"פ מסגרת'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה מסגרת'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה מסגרת'},
+                ],
+            ],
+            resize_keyboard: true
+        },
+    })
+}
+
+function eFramePlacement(chatId)
+{
+    bot.telegram.sendMessage(chatId,exploadingFrame[3]/*sendVideo(chatId, {source: './Media/Vids/EFrameActivation.mp4'}*/, {
+        reply_markup:
+        {
+            inline_keyboard:[
+                [
+                    {text: 'בטיחות', callback_data: 'בטיחות מסגרת'},
+                    {text: 'סד"פ', callback_data: 'סד"פ מסגרת'},
+                ],
+                [
+                    {text: 'סרטון הפעלה', callback_data: 'הפעלה מסגרת'},
+                    {text: 'סרטון הנחה', callback_data: 'הנחה מסגרת'},
+                ],
+            ],
+            resize_keyboard: true
+        },
+    })
+}
+
 //exploading frame safety text read  
 fs.readFile('./Texts/Habala/specialCharges/safetyEFrame.txt', 'utf8', (err, text) => {
     if (err) {console.error(err); return;}
@@ -89,4 +129,4 @@ fs.readFile('./Texts/Habala/specialCharges/insEFrame.txt', 'utf8', (err, text) =
     exploadingFrame[3] = text;
     });
 
-module.exports = {eFrameAction, eFrameSafety, eFrameInst};
+module.exports = {eFrameAction, eFrameSafety, eFrameInst, eFrameActivation, eFramePlacement};

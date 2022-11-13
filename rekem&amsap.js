@@ -5,7 +5,7 @@ const fs = require('fs');
 const { ParseMode } = require('messaging-api-telegram/dist/TelegramTypes');
 
 
-//napazim buttons
+
 var mainMenu = "ראשי", homerM = ["חומר מקצועי" , "חזרה לחומר מקצועי"], rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], rekem = ['רק"מ' , 'חזרה לרק"מ'], amsap = ['אמס"פ' , 'חזרה לאמס"פ'];
 var zapash = ['צפ"ש' , 'חזרה לצפ"ש']; 
 var rizuf = ['ריצוף', 'חזרה לריצוף'];
