@@ -4,7 +4,7 @@ const bot = new Telegraf('5649257979:AAE5MFMRszRdSgTVvR7o7EYOMjnVaa4LN3M');
 const fs = require('fs');
 const ctx = require('ctx');
 const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
-const napatzimLib = require("./napatzimFunctions") , rekemAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
+const napatzimLib = require("./napatzimFunctions") , rekemAndAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
 const testsAndSafetyLib = require("./testAndSafety"), equipListLib = require("./equipmentListMenu"), activationLib = require("./activationsMenu");
 const ptilimLib = require("./ptilimMenu") , mikushLib = require("./mikush");
 
@@ -171,12 +171,22 @@ bot.hears(aPersonal[2], ctx => {mikushLib.Alef4(ctx.chat.id)})
 bot.hears(aPersonal[3], ctx => {mikushLib.lightMine(ctx.chat.id)})
 
 //Rekem&amsap tree
-bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAmsapLib.rekemAmsapHead(ctx.chat.id);}) // Head of tree
-bot.hears([rekem[0], rekem[1]], ctx => {rekemAmsapLib.rekemHead(ctx.chat.id);}) // rekem branch start 
-bot.hears([amsap[0], amsap[1]], ctx => {rekemAmsapLib.amsapHead(ctx.chat.id);}) // amsap branch start
-bot.hears('צפ"ש', ctx => {rekemAmsapLib.zapashMenu(ctx.chat.id);}) //live zapash head
-bot.action('בטיחות צפש', ctx => {rekemAmsapLib.zapashSafety(ctx.chat.id);}) //zapash safety 
-bot.action('הפעלה צפש', ctx => {rekemAmsapLib.zapashVid(ctx.chat.id);}) // zapash activation vid 
+bot.hears([rekemAndAmsap[0], rekemAndAmsap[1]], ctx =>{rekemAndAmsapLib.rekemAmsapHead(ctx.chat.id);}) // Head of tree
+bot.hears([rekem[0], rekem[1]], ctx => {rekemAndAmsapLib.rekemHead(ctx.chat.id);}) // rekem branch start 
+bot.hears([amsap[0], amsap[1]], ctx => {rekemAndAmsapLib.amsapHead(ctx.chat.id);}) // amsap branch start
+bot.hears('צפ"ש', ctx => {rekemAndAmsapLib.zapashMenu(ctx.chat.id);}) // zapash head branch
+bot.action('בטיחות צפש', ctx => {rekemAndAmsapLib.zapashSafety(ctx.chat.id);}) 
+bot.action('הפעלה צפש', ctx => {rekemAndAmsapLib.zapashVid(ctx.chat.id);}) 
+bot.action('חיבור צפש', ctx => {rekemAndAmsapLib.zapashIns(ctx.chat.id)})
+bot.hears('ריצוף', ctx => {rekemAndAmsapLib.rizufMenu(ctx.chat.id);}) // rizuf head branch
+bot.action('בטיחות ריצוף', ctx => {rekemAndAmsapLib.rizufSafety(ctx.chat.id);}) 
+bot.action('הפעלה ריצוף', ctx => {rekemAndAmsapLib.rizufVid(ctx.chat.id);}) 
+bot.action('חיבור ריצוף', ctx => {rekemAndAmsapLib.rizufIns(ctx.chat.id)})
+bot.hears('חטפן', ctx => {rekemAndAmsapLib.snatcherMenu(ctx.chat.id);}) // snatcher head branch
+bot.action('בטיחות חטפן', ctx => {rekemAndAmsapLib.snatcherSafety(ctx.chat.id);}) 
+bot.action('הפעלה חטפן', ctx => {rekemAndAmsapLib.snatcherVid(ctx.chat.id);}) 
+bot.action('חיבור חטפן', ctx => {rekemAndAmsapLib.snatcherIns(ctx.chat.id)})
+bot.hears('נגמ"ש', ctx => {bot.telegram.sendMessage(ctx.chat.id, "https://t.me/HirBeClickBot")})
 
 //חבלה ראשי
 bot.hears([habala, 'חזרה ל' + habala], ctx => {
