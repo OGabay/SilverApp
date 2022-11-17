@@ -6,7 +6,7 @@ const ctx = require('ctx');
 const raamLib = require("./raamFunctions") , eFrameLib = require("./exploadingFrameFunctions") , zapahLib = require("./zapahFunctions");
 const napatzimLib = require("./napatzimFunctions") , rekemAndAmsapLib = require("./rekem&amsap"), diagnosisLib = require("./diagnosisMenu");
 const testsAndSafetyLib = require("./testAndSafety"), equipListLib = require("./equipmentListMenu"), activationLib = require("./activationsMenu");
-const ptilimLib = require("./ptilimMenu") , mikushLib = require("./mikush");
+const ptilimLib = require("./ptilimMenu") , mikushLib = require("./mikush"), reportsLib = require("./reportFormats"), badahLib = require("./badahs");
 
 
 //activations and napatzim
@@ -16,6 +16,7 @@ var kraviActivation = ["הפעלה קרבית", 'סד"פ הפעלה קרבית' 
 var welcomeMessage , badah = 'בד"חים', homerM = "חומר מקצועי", habala = "חבלה", mikush = ["מיקוש", "חזרה למיקוש"] , mainMenu = "ראשי";
 var testsAndSafety = ["מבחנים ובטיחות"], pakaKesef = 'פק"א אימון כס"ף';
 var rekemAndAmsap = ['רקם ואמס"פ', 'חזרה לרקם ואמס"פ'], diagnosis = ["אבחונים", "אבחון גדוד", "אבחון פלוגה"];
+var reportFormats = ['סיכומי אימונים', 'סיכום אימון גדודי', 'סיכום אימון כס"ף'];
 //habala buttons
 var ptilim = "פתילים ומאיצים", napatzim = ["נפצים", "חזרה לנפצים"], activations = "הפעלות";
 var specialCharges = ["מטענים ייעודים", "חזרה למטענים ייעודים"], mainChargesTable = "טבלת מטענים עיקרים";
@@ -53,7 +54,7 @@ bot.command("start", ctx =>
                 ],
                 [
                     {text: pakaKesef},
-                    {text: 'סיכומי אימונים'},
+                    {text: reportFormats[0]},
                     {text: testsAndSafety[0]}
                 ],
                 [
@@ -83,31 +84,12 @@ bot.hears(mainMenu, ctx => {
                 ],
                 [
                     {text: pakaKesef},
-                    {text: 'סיכומי אימונים'},
+                    {text: reportFormats[0]},
                     {text: testsAndSafety[0]}
                 ],
                 [
                     {text: 'צמ"ה'}
                 ]
-            ],
-            resize_keyboard: true
-        }
-    })
-})
-
-//בדחים ראשי
-bot.hears([badah, 'חזרה ל' + badah], ctx => {
-    bot.telegram.sendMessage(ctx.chat.id, badah, {
-        reply_markup:
-        {
-            keyboard:
-            [
-                [
-                    {text: 'ממלא מקום'},
-                ],
-                [
-                    {text: mainMenu},
-                ],
             ],
             resize_keyboard: true
         }
@@ -156,6 +138,26 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
         }
     })
 })
+
+//badah tree
+bot.hears(badah, ctx => {badahLib.badahsMenu(ctx.chat.id)}) // head of function
+bot.hears("נקודות לאבחון מסגרת", ctx => {badahLib.groupDiagPoints(ctx.chat.id)})
+bot.hears('שיחת פתיחה לאימון', ctx => {badahLib.drillOpeningChat(ctx.chat.id)})
+bot.hears('סד"פ ירידה לשטח בתחילת אימון', ctx => {badahLib.startOfDrillList(ctx.chat.id)})
+bot.hears('סד"פ טרם הוצאת אימון', ctx => {badahLib.preparationList(ctx.chat.id)})
+bot.hears('התנהלות בשטחי אש', ctx => {badahLib.fireGroundsRules(ctx.chat.id)})
+bot.hears('ביצוע קפ"ק 3 בטיחות', ctx => {badahLib.kapak3(ctx.chat.id)})
+bot.hears('סד"פ סוף יום אימון', ctx => {badahLib.endOfDayList(ctx.chat.id)})
+bot.hears('סד"פ סיכום וסיום אימון', ctx => {badahLib.conclusionEndOfDrill(ctx.chat.id)})
+bot.hears('בע"ת בתחום הבטיחות', ctx => {badahLib.safetyRolesTable(ctx.chat.id)})
+bot.hears('הנחיות לעומס קור', ctx => {badahLib.xtremeCold(ctx.chat.id)})
+bot.hears('הנחיות לעומס חום', ctx => {badahLib.xtremeHeat(ctx.chat.id)})
+
+//reports tree
+bot.hears(reportFormats[0], ctx => {reportsLib.ReportsMenu(ctx.chat.id)})
+bot.hears(reportFormats[1], ctx => {reportsLib.gdudiReport(ctx.chat.id)})
+bot.hears(reportFormats[2], ctx => {reportsLib.kesefReport(ctx.chat.id)})
+
 
 //mikush tree
 bot.hears([mikush[0], mikush[1]], ctx => {mikushLib.mikushHead(ctx.chat.id)}) //Head of tree
