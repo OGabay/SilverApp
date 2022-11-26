@@ -308,14 +308,5 @@ bot.hears(equipList[4], ctx => {equipListLib.explosivesRangeEquipment(ctx.chat.i
 //Messages
 welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך \nמדיה יכולה לקחת זמן להיטען - אנא התעזרו בסבלנות\n פותח ע"י עומרי גבאי - 0544704404';
 
-while(true)
-{
-    try
-    {
-        bot.launch();
-    }   
-    catch
-    {
-        console.log("kk");
-    }
-}
+bot.launch();
+
