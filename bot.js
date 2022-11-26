@@ -32,6 +32,8 @@ var equipList = ['רשמ"צים', 'רשמ"צ כללי', 'רשמ"צ חתימת ח
 //mikush buttons
 var aTank = ["נגד טנקים", "חזרה לנגד טנקים"], inUseAT = ['נ"ט בשימוש'];
 var aPersonal = ["נגד אדם" , 'נ"א לא בשימוש', "4 א'", 'מוקש תאורה'];
+//underGroundWFbuttons
+var underGroundWF = ['תת"ק'];
 
 
 //code
@@ -125,6 +127,7 @@ bot.hears([homerM, 'חזרה ל' + homerM], ctx => {
             [
                 [
                     {text: habala},
+                    {text: underGroundWF[0]},
                 ],
                 [
                     {text: mikush[0]},
@@ -165,7 +168,7 @@ bot.hears([aTank[0], aTank[1]], ctx => {mikushLib.aTHead(ctx.chat.id)})
 bot.hears(inUseAT[0], ctx => {mikushLib.aTInUse(ctx.chat.id)})
 bot.hears("29 א'", ctx => {mikushLib.alaf29(ctx.chat.id)})
 bot.hears("M-29", ctx => {mikushLib.M29(ctx.chat.id)})
-bot.hears("M-15", ctx => {mikushLib.M29(ctx.chat.id)})
+bot.hears("M-15", ctx => {mikushLib.M15(ctx.chat.id)})
 bot.hears('נ"ט לא בשימוש', ctx => {mikushLib.aTNotInUse(ctx.chat.id)})
 bot.hears([aPersonal[0], 'הגדרה מוקש נ"א'], ctx => {mikushLib.aPHead(ctx.chat.id)})
 bot.hears(aPersonal[1], ctx => {mikushLib.APNotInUse(ctx.chat.id)})
@@ -305,4 +308,14 @@ bot.hears(equipList[4], ctx => {equipListLib.explosivesRangeEquipment(ctx.chat.i
 //Messages
 welcomeMessage = 'שלום וברוכים הבאים לסילבראפ של ענף הנדסה מלי 500\n באפליקציה זו תוכלו למצוא תשובות לשאלות מקצועיות ובטיחותיות\n הניווט מתבצע בעזרת הכפתורים בתחתית המסך \nמדיה יכולה לקחת זמן להיטען - אנא התעזרו בסבלנות\n פותח ע"י עומרי גבאי - 0544704404';
 
-bot.launch();
+while(true)
+{
+    try
+    {
+        bot.launch();
+    }   
+    catch
+    {
+        console.log("kk");
+    }
+}

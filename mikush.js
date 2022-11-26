@@ -117,7 +117,8 @@ function alaf29(chatId)
                 ]
             ],
             resize_keyboard: true
-        }
+        },
+        parse_mode: 'HTML'
     })
 }
 
@@ -139,7 +140,8 @@ function M29(chatId)
                 ]
             ],
             resize_keyboard: true
-        }
+        },
+        parse_mode: 'HTML'
     })
 }
 
@@ -161,7 +163,8 @@ function M15(chatId)
                 ]
             ],
             resize_keyboard: true
-        }
+        },
+        parse_mode: 'HTML'
     })
 }
 
